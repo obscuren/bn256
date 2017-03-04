@@ -151,14 +151,14 @@ func (e *gfP2) MulScalar(a *gfP2, b *big.Int) *gfP2 {
 	return e
 }
 
-// MulXi sets e=ξa where ξ=i+3 and then returns e.
+// MulXi sets e=ξa where ξ=i+9 and then returns e.
 func (e *gfP2) MulXi(a *gfP2, pool *bnPool) *gfP2 {
-	// (xi+y)(i+3) = (3x+y)i+(3y-x)
-	tx := pool.Get().Lsh(a.x, 1)
+	// (xi+y)(i+3) = (9x+y)i+(9y-x)
+	tx := pool.Get().Lsh(a.x, 3)
 	tx.Add(tx, a.x)
 	tx.Add(tx, a.y)
 
-	ty := pool.Get().Lsh(a.y, 1)
+	ty := pool.Get().Lsh(a.y, 3)
 	ty.Add(ty, a.y)
 	ty.Sub(ty, a.x)
 
