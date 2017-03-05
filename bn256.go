@@ -369,16 +369,16 @@ func Pair(g1 *G1, g2 *G2) *GT {
 }
 
 func PairingCheck(a []*G1, b []*G2) bool {
-    pool := new(bnPool)
-    e := newGFp12(pool)
-    e.SetOne()
-    for i := 0; i < len(a); i++ {
-	    new_e := miller(b[i].p, a[i].p, pool)
-        e.Mul(e, new_e, pool)
-    }
+	pool := new(bnPool)
+	e := newGFp12(pool)
+	e.SetOne()
+	for i := 0; i < len(a); i++ {
+		new_e := miller(b[i].p, a[i].p, pool)
+		e.Mul(e, new_e, pool)
+	}
 	ret := finalExponentiation(e, pool)
-	 e.Put(pool)
-    return ret.IsOne()
+	e.Put(pool)
+	return ret.IsOne()
 }
 
 // bnPool implements a tiny cache of *big.Int objects that's used to reduce the
