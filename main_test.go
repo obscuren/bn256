@@ -37,6 +37,9 @@ func TestPairings(t *testing.T) {
     if pn1.String() != np1.String() {
         t.Error("Pairing mismatch: e(a, -b) != e(-a, b)")
     }
+    if !PairingCheck([]*G1{a1, an1}, []*G2{b1, b1}) {
+        t.Error("MultiAte check gave false negative!")
+    }
     p0 := new(GT).Add(p1, pn1)
     p0_2 := Pair(a1, b0)
     if p0.String() != p0_2.String() {
@@ -57,6 +60,9 @@ func TestPairings(t *testing.T) {
     }
     if p2.String() == p1.String() {
         t.Error("Pairing is degenerate!")
+    }
+    if PairingCheck([]*G1{a1, a1}, []*G2{b1, b1}) {
+        t.Error("MultiAte check gave false positive!")
     }
     p999 := Pair(a37, b27)
     p999_2 := Pair(a1, b999)
